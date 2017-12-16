@@ -16,7 +16,7 @@ app.use(bodyParser.json())
 
 require('./router')(app);
 
-sequelize.sync()
+sequelize.sync({force: true})
     .then(() => {
         app.listen(config.port);
         console.log(`Server start on port ${config.port} with host at ${config.host}`);
