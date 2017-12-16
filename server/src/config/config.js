@@ -9,7 +9,7 @@ module.exports = {
     options: {
       dialect: process.env.DIALECT || 'mssql',
       host: process.env.HOST || 'jaychand-pc',
-      storage: './tabtracker.mssql'
+      storage: './Pharma.mssql'
     }
   }
 }
