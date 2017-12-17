@@ -11,5 +11,8 @@ module.exports = {
       host: process.env.HOST || 'jaychand-pc',
       storage: './Pharma.mssql'
     }
+  },
+  authentication: {
+    jwtSecret: process.env.JWT_SECRET || 'secret'
   }
 }
