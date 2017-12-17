@@ -1,17 +1,27 @@
-// The Vue build version to load with the `import` command
-// (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './App'
-import router from './router'
+import VueRouter  from './router'
 import ElementUI from 'element-ui'
+import routes from './routes'
 
-Vue.config.productionTip = false
+
 Vue.use(ElementUI)
+Vue.use(VueRouter)
+
+const router = new VueRouter({
+  routes
+})
 
 /* eslint-disable no-new */
-new Vue({
-  el: '#app',
-  router,
-  template: '<App/>',
-  components: { App }
+router.beforeEach((to, from, next) => {
+  //NProgress.start();  
+  if (to.path == '/login') {
+    sessionStorage.removeItem('token');
+  }
+  let toekn = JSON.parse(sessionStorage.getItem('token'));  
+  if (!toekn && to.path !== '/login')  {
+    next({ path: '/login' })
+  } else {
+    next()
+  }
 })
