@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import HelloWorld from '@/components/HelloWorld'
 import Login from '@/views/login.vue'
+import Register from '@/views/register.vue'
 import NotFound from '@/views/404.vue'
 import Home from '@/views/Home.vue'
 
@@ -17,7 +18,14 @@ export default new Router({
       component: Login,
       name: '',
       hidden: true
-  },    
+  }, 
+  {
+    path: '/register',
+    cors:'true',
+    component: Register,
+    name: '',
+    hidden: true
+},    
   {
       path: '/404',
       cors:'true',

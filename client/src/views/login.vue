@@ -25,7 +25,7 @@
 
                 <div class="control">
 
-                  <input class="input is-large" type="email" placeholder="Your Email" autofocus="">
+                  <input v-model="email" class="input is-large" type="email" placeholder="Your Email" autofocus="">
 
                 </div>
 
@@ -37,7 +37,7 @@
 
                 <div class="control">
 
-                  <input class="input is-large" type="password" placeholder="Your Password">
+                  <input v-model="password" class="input is-large" type="password" placeholder="Your Password">
 
                 </div>
 
@@ -55,7 +55,7 @@
 
               </div>
 
-              <a class="button is-block is-info is-large">Login</a>
+              <a class="button is-block is-info is-large" >Login</a>
 
             </form>
 
@@ -86,8 +86,32 @@
 @import '../css/login.css';
 </style>
 <script>
-
+import AuthenticationService from '@/services/AuthenticationService'
 export default {
-  
+  data () {
+    return {
+      email: '',
+      password: '',
+      error: null
+    }
+  },
+  methods: {
+    async login () {
+      try {
+        const response = await AuthenticationService.login({
+          email: this.email,
+          password: this.password
+        })
+        this.$store.dispatch('setToken', response.data.token)
+        this.$store.dispatch('setUser', response.data.user)
+        this.$router.push({
+          name: 'songs'
+        })
+      } catch (error) {
+        this.error = error.response.data.error
+      }
+    }
+  }
 }
+
 </script>
