@@ -62,12 +62,10 @@
               </a>
 
               <hr class="navbar-divider">
-
-              <div class="navbar-item">
-
+              <a class="navbar-item" @click="logout">
                 Logout
-
-              </div>
+              </a>
+             
 
             </div>
 
@@ -81,3 +79,16 @@
 
   </nav>
 </template>
+<script>
+export default {
+  methods: {
+    logout () {
+      this.$store.dispatch('setToken', null)
+      this.$store.dispatch('setUser', null)
+      this.$router.push({
+        path: '/login'
+      })
+    }
+  }
+}
+</script>
