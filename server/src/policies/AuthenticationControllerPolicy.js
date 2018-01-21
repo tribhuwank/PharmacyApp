@@ -3,7 +3,11 @@ const Joi = require('joi')
 module.exports = {
   register (req, res, next) {
     const schema = {
+      name: Joi.string(),
       email: Joi.string().email(),
+      mobile: Joi.string(),
+      gender: Joi.string(),
+      age: Joi.string(),
       password: Joi.string().regex(
         new RegExp('^[a-zA-Z0-9]{8,32}$')
       )
@@ -13,11 +17,21 @@ module.exports = {
 
     if (error) {
       switch (error.details[0].context.key) {
+        case 'name':
+          res.status(400).send({
+            error: 'You must provide a valid name'
+          })
+          break
         case 'email':
           res.status(400).send({
             error: 'You must provide a valid email address'
           })
           break
+        case 'mobile':
+          res.status(400).send({
+            error: 'You must provide a valid mobile'
+          })
+          break        
         case 'password':
           res.status(400).send({
             error: `The password provided failed to match the following rules:

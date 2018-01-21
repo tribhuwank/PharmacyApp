@@ -5,6 +5,7 @@ import App from './App'
 import router from './router'
 import { sync } from 'vuex-router-sync'
 import store from '@/store/store'
+import Notification from 'vue-bulma-notification' 
 Vue.config.productionTip = false
 
 sync(store, router)

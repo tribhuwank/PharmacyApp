@@ -67,7 +67,7 @@
               </div>
 
       
-              <a class="button is-block is-info is-large"  >Register</a>
+              <a class="button is-block is-info is-large" @click="register">Register</a>
 
             </form>
 
@@ -95,7 +95,12 @@
 @import '../css/login.css';
 </style>
 <script>
+import Vue from 'vue'
 import AuthenticationService from '@/services/AuthenticationService'
+import Notification from 'vue-bulma-notification'
+const NotificationComponent = Vue.extend(Notification)
+
+
 const openNotification = (propsData = {
   title: '',
   message: '',
@@ -116,19 +121,30 @@ export default {
       email: '',
       mobile:'',
        gender:'',
-      password: '',      
+       age:'',
+      password: '',            
       confirmPassword:'',
       agree:''
     }
   },
   methods: {
+    openNotificationWithType (type) {
+      openNotification({
+        title: 'This is a title',
+        message: 'This is the message.',
+        type: type
+      })
+    },
     async register () {
       try {
         const response = await AuthenticationService.register({
           name:this.name,            
           email: this.email,
+          mobile:this.mobile,
           gender:this.gender,
+          age:this.age,
           password: this.password
+
         })
         this.$store.dispatch('setToken', response.data.token)
         this.$store.dispatch('setUser', response.data.user)
@@ -138,8 +154,8 @@ export default {
       } catch (error) {
         openNotification({
         title: 'Error',
-        message: error.response.data.error,
-        type: type
+        message:error.response.data.error,
+        type: 'Error'
       })
 
         

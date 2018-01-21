@@ -12,6 +12,7 @@ function jwtSignUser (user) {
 module.exports = {
   async register (req, res) {
     try {
+      debugger;
       const user = await User.create(req.body)
       const userJson = user.toJSON()
       res.send({
@@ -20,13 +21,13 @@ module.exports = {
       })
     } catch (err) {
       res.status(400).send({
-        error: 'This email account is already in use.'
+        error: err+req.body//'This email account is already in use.'
       })
     }
   },
   async login (req, res) {
     try {
-      const {email, password} = req.body
+      const {name,email,mobile,gender,age, password,} = req.body
       const user = await User.findOne({
         where: {
           email: email

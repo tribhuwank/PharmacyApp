@@ -63,11 +63,11 @@
 
           <p class="has-text-grey">
 
-            <a href="../">Sign Up</a> &nbsp;·&nbsp;
+            <a href="#" @click="signUp">Sign Up</a> &nbsp;·&nbsp;
 
-            <a href="../">Forgot Password</a> &nbsp;·&nbsp;
+            <a href="#">Forgot Password</a> &nbsp;·&nbsp;
 
-            <a href="../">Need Help?</a>
+            <a href="#">Need Help?</a>
 
           </p>
 
@@ -80,22 +80,57 @@
   </section>
 </template>
 <style>
+
 @import 'font-awesome/css/font-awesome.min.css';
 @import '../css/googleapiFont.css';
 @import 'bulma/css/bulma.css';
 @import '../css/login.css';
 </style>
 <script>
+import Vue from 'vue'
 import AuthenticationService from '@/services/AuthenticationService'
+import Notification from 'vue-bulma-notification' 
+const NotificationComponent = Vue.extend(Notification)
+
+
+
+const openNotification = (propsData = {
+  title: '',
+  message: '',
+  type: '',
+  direction: '',
+  duration: 4500,
+  container: '.notifications'
+}) => {
+  return new NotificationComponent({
+    el: document.createElement('div'),
+    propsData
+  })
+}
 export default {
+  components: {
+    Notification
+  },
   data () {
     return {
       email: '',
-      password: '',
-      error: null
+      password: ''
     }
   },
+
   methods: {
+ openNotificationWithType (type) {
+      openNotification({
+        title: 'This is a title',
+        message: 'This is the message.',
+        type: type
+      })
+    },
+    async signUp () {
+        this.$router.push({
+            path: '/register'
+        })
+    },
     async login () {
       alert('login clicked');
       try {
@@ -109,7 +144,12 @@ export default {
           path: '/'
         })
       } catch (error) {
-        this.error = error.response.data.error
+        openNotification({
+      message: error.response.data ,
+      type: 'danger',
+      duration: 0
+    })
+        
       }
     }
   }
