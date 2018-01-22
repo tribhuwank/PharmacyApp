@@ -132,7 +132,6 @@ export default {
         })
     },
     async login () {
-      alert('login clicked');
       try {
         const response = await AuthenticationService.login({
           email: this.email,
